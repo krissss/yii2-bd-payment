@@ -2,7 +2,7 @@
     "name": "kriss/yii2-bd-payment",
     "description": "Yii2 必答支付的组件",
     "type": "yii2-extension",
-    "keywords": [""],
+    "keywords": ["yii2", "bd-payment"],
     "license": "MIT",
     "authors": [
         {
