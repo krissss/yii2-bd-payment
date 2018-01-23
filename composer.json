@@ -1,0 +1,21 @@
+{
+    "name": "kriss/yii2-bd-payment",
+    "description": "Yii2 必答支付的组件",
+    "type": "yii2-extension",
+    "keywords": [""],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "kriss",
+            "email": "462679766@qq.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "~2.0.13"
+    },
+    "autoload": {
+        "psr-4": {
+            "kriss\\bd\\payment\\": ""
+        }
+    }
+}
