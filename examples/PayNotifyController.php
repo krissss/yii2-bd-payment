@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\controllers;
+namespace kriss\bd\payment\examples;
 
 use common\models\Order;
 use kriss\bd\payment\Payment;

@@ -1,10 +1,9 @@
 <?php
 
-namespace frontend\controllers;
+namespace kriss\bd\payment\examples;
 
 use common\models\Order;
 use frontend\components\AuthRestController;
-use frontend\models\form\OrderPayForm;
 use kriss\behaviors\rest\PostVerbFilter;
 use Yii;
 use yii\base\Exception;
