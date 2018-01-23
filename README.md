@@ -30,22 +30,11 @@ $config = [
 ]
 ```
 
-### use
+### Start Pay
 
-```php
-use kriss\bd\payment\Payment;
+see [PayController.php](https://github.com/krissss/yii2-bd-payment/blob/master/examples/PayController.php)
+see [OrderPayForm.php](https://github.com/krissss/yii2-bd-payment/blob/master/examples/OrderPayForm.php)
 
-$payment = Yii::$app->get(Payment::COMPONENT_NAME);
-$payParams = [
-    'pay_type' => Payment::PAY_TYPE_WECHAT_MP,
-    'out_trade_no' => $order->id,
-    'total_fee' => $order->pay_price * 100,
-    'body' => Yii::$app->name . '订单支付',
-    'product_id' => $order->goods_id,
-];
-if ($this->return_url) {
-    $payParams['return_url'] = $this->return_url;
-}
-$payment->setAttributes($payParams);
-return $payment->pay();
-```
+### Handle Notify
+
+see [PayNotifyController.php](https://github.com/krissss/yii2-bd-payment/blob/master/examples/PayNotifyController.php)
