@@ -15,13 +15,17 @@ class Payment extends Model
     // component 配置的名字必须是 self::COMPONENT_NAME
     const COMPONENT_NAME = 'bd-payment';
 
+    // 微信支付
     const PAY_TYPE_WECHAT_MP = 10;
     const PAY_TYPE_WECHAT_WAP = 11;
     const PAY_TYPE_WECHAT_APP = 12;
     const PAY_TYPE_WECHAT_SCAN = 13;
+    // 支付宝支付
     const PAY_TYPE_ALIPAY_WEB = 20;
     const PAY_TYPE_ALIPAY_WAP = 21;
     const PAY_TYPE_ALIPAY_APP = 22;
+    // 通联支付
+    const PAY_TYPE_ALLIN_PAY_H5 = 100;
 
     // component 配置信息
     /**
@@ -93,6 +97,11 @@ class Payment extends Model
      */
     public $product_id;
     /**
+     * 通联支付用户id，通联H5支付必须
+     * @var string
+     */
+    public $allin_pay_user_id;
+    /**
      * 支付宝H5支付 回调地址
      * @var string
      */
@@ -104,7 +113,7 @@ class Payment extends Model
     public function rules()
     {
         return [
-            [['pay_type', 'out_trade_no', 'body', 'total_fee', 'attach', 'mini_app_code', 'product_id', 'return_url'], 'safe']
+            [['pay_type', 'out_trade_no', 'body', 'total_fee', 'attach', 'mini_app_code', 'product_id', 'allin_pay_user_id', 'return_url'], 'safe']
         ];
     }
 
@@ -156,6 +165,9 @@ class Payment extends Model
                 break;
             case static::PAY_TYPE_ALIPAY_APP:
                 $result = $this->alipayApp();
+                break;
+            case static::PAY_TYPE_ALLIN_PAY_H5:
+                $result = $this->allinPayWap();
                 break;
             default:
                 throw new InvalidConfigException('未知的 pay_type');
@@ -337,6 +349,27 @@ class Payment extends Model
             'total_fee' => $this->total_fee,
             'attach' => $this->attach,
             'product_id' => $this->product_id
+        ]);
+    }
+
+    /**
+     * 支付宝扫码支付
+     * @return mixed
+     */
+    protected function allinPayWap()
+    {
+        return $this->generateForm([
+            'ak' => $this->ak,
+            'is_test' => $this->isTest,
+            'driver' => 'allinPay',
+            'gateway' => 'wap',
+            'out_trade_no' => $this->out_trade_no,
+            'body' => $this->body,
+            'spbill_create_ip' => $this->getUserIp(),
+            'total_fee' => $this->total_fee,
+            'attach' => $this->attach,
+            'allin_pay_user_id' => $this->allin_pay_user_id,
+            'return_url' => $this->return_url,
         ]);
     }
 
