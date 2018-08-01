@@ -25,6 +25,7 @@ $config = [
             'sk' => 'sk_609706e2f87affb77eefe5abd799057x',
             'logCategory' => 'bd-pay',
             'isTest' => true,
+            'version' => '2.0',
         ]
     ]
 ]

@@ -3,6 +3,7 @@
 namespace kriss\bd\payment\examples;
 
 use common\models\Order;
+use kriss\bd\payment\models\PayForm;
 use kriss\bd\payment\Payment;
 use Yii;
 use yii\base\InvalidConfigException;
@@ -68,6 +69,7 @@ class OrderPayForm extends Model
             return false;
         }
 
+        /** @var Payment $payment */
         $payment = Yii::$app->get(Payment::COMPONENT_NAME);
         $payParams = [
             'pay_type' => $this->pay_type,
@@ -79,8 +81,7 @@ class OrderPayForm extends Model
         if ($this->return_url) {
             $payParams['return_url'] = $this->return_url;
         }
-        $payment->setAttributes($payParams);
-        return $payment->pay();
+        return $payment->invoke(new PayForm($payParams));
     }
 
 }
