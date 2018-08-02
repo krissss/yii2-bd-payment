@@ -15,6 +15,8 @@ class Support
      */
     public static function makeSign($sk, $data)
     {
+        // 过滤所有值为空 或者null 的数据
+        $data = array_filter($data);
         // 原所有数据除去 sign
         unset($data['sign']);
         // 原数据中增加 sk
