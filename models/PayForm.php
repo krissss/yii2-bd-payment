@@ -53,6 +53,12 @@ class PayForm extends AbstractForm
      */
     public $attach;
     /**
+     * 客户端ip，可以为空，默认为当前请求的ip
+     * 为 false 固定不传（在 cli 下可能没有 request 组件时有用）
+     * @var string
+     */
+    public $spbill_create_ip;
+    /**
      * 小程序的 code，为了获取 openid
      * @link https://mp.weixin.qq.com/debug/wxadoc/dev/api/api-login.html?t=20161122
      * @var string
@@ -211,6 +217,12 @@ class PayForm extends AbstractForm
      */
     protected function getUserIp()
     {
+        if ($this->spbill_create_ip) {
+            return $this->spbill_create_ip;
+        }
+        if ($this->spbill_create_ip === false) {
+            return '';
+        }
         return Yii::$app->request->userIP;
     }
 }
