@@ -3,7 +3,9 @@
 namespace kriss\bd\payment;
 
 use kriss\bd\payment\models\AbstractForm;
+use Yii;
 use yii\base\BaseObject;
+use yii\base\Exception;
 use yii\base\InvalidConfigException;
 
 class Payment extends BaseObject
@@ -72,5 +74,24 @@ class Payment extends BaseObject
         }
         $model->setPayment($this);
         return $model->doService();
+    }
+
+    /**
+     * @param null $paymentClass
+     * @return object|null|static
+     * @throws Exception
+     * @throws InvalidConfigException
+     */
+    public static function getInstance($paymentClass = null)
+    {
+        if (!$paymentClass) {
+            $paymentClass = static::class;
+        } else {
+            if (!is_a($paymentClass, Payment::class, true)) {
+                throw new Exception('$paymentClass 类型错误');
+            }
+        }
+        /** @var $paymentClass Payment */
+        return Yii::$app->get($paymentClass::COMPONENT_NAME);
     }
 }

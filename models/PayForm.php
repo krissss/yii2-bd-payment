@@ -15,6 +15,7 @@ class PayForm extends AbstractForm
     const PAY_TYPE_WECHAT_APP = 12;
     const PAY_TYPE_WECHAT_SCAN = 13;
     const PAY_TYPE_WECHAT_MINI_APP = 14;
+    const PAY_TYPE_WECHAT_TRANSFER = 15;
     // 支付宝支付
     const PAY_TYPE_ALIPAY_WEB = 20;
     const PAY_TYPE_ALIPAY_WAP = 21;
@@ -68,6 +69,28 @@ class PayForm extends AbstractForm
      */
     public $allin_pay_user_id;
     /**
+     * 转账收款人的openid
+     * @var string
+     */
+    public $transfer_openid;
+    /**
+     * 转账类型，如果需要通过 APP/小程序 的商户账号appid进行转账，传入 app/miniapp
+     * @var string
+     */
+    public $transfer_type;
+    /**
+     * 微信转账
+     * 是否校验真实姓名， 0 不校验，1 强制校验
+     * @var int
+     */
+    public $transfer_check_name = 0;
+    /**
+     * 微信转账
+     * 校验真实姓名时的用户真实姓名
+     * @var string
+     */
+    public $transfer_user_name;
+    /**
      * 支付宝H5支付 回调地址
      * @var string
      */
@@ -107,6 +130,7 @@ class PayForm extends AbstractForm
             static::PAY_TYPE_WECHAT_APP => ['type' => 'api', 'params' => ['driver' => 'wechat', 'gateway' => 'app']],
             static::PAY_TYPE_WECHAT_SCAN => ['type' => 'api', 'params' => ['driver' => 'wechat', 'gateway' => 'scan', 'product_id' => $this->product_id]],
             static::PAY_TYPE_WECHAT_MINI_APP => ['type' => 'api', 'params' => ['driver' => 'wechat', 'gateway' => 'miniapp', 'mini_app_code' => $this->mini_app_code]],
+            static::PAY_TYPE_WECHAT_TRANSFER => ['type' => 'api', 'params' => ['driver' => 'wechat', 'gateway' => 'transfer', 'transfer_openid' => $this->transfer_openid, 'transfer_type' => $this->transfer_type, 'transfer_check_name' => $this->transfer_check_name, 'transfer_user_name' => $this->transfer_user_name]],
 
             static::PAY_TYPE_ALIPAY_WEB => ['type' => 'form', 'params' => ['driver' => 'alipay', 'gateway' => 'web']],
             static::PAY_TYPE_ALIPAY_WAP => ['type' => 'form', 'params' => ['driver' => 'alipay', 'gateway' => 'wap', 'return_url' => $this->return_url]],

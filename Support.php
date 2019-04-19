@@ -34,10 +34,13 @@ class Support
      * @param $title
      * @param $data
      * @param string $type
+     * @param null $paymentClass
+     * @throws \yii\base\Exception
+     * @throws \yii\base\InvalidConfigException
      */
-    public static function logger($title, $data, $type = 'info')
+    public static function logger($title, $data, $type = 'info', $paymentClass = null)
     {
-        $logCategory = Yii::$app->get(Payment::COMPONENT_NAME)->logCategory;
+        $logCategory = Payment::getInstance($paymentClass)->logCategory;
         Yii::$type($title . ':' . Json::encode($data), $logCategory);
     }
 }

@@ -69,8 +69,6 @@ class OrderPayForm extends Model
             return false;
         }
 
-        /** @var Payment $payment */
-        $payment = Yii::$app->get(Payment::COMPONENT_NAME);
         $payParams = [
             'pay_type' => $this->pay_type,
             'out_trade_no' => $order->id,
@@ -81,7 +79,7 @@ class OrderPayForm extends Model
         if ($this->return_url) {
             $payParams['return_url'] = $this->return_url;
         }
-        return $payment->invoke(new PayForm($payParams));
+        return Payment::getInstance()->invoke(new PayForm($payParams));
     }
 
 }

@@ -38,6 +38,6 @@ class PayNotifyController extends Controller
      */
     protected function getLogCategory()
     {
-        return Yii::$app->get(Payment::COMPONENT_NAME)->logCategory;
+        return Payment::getInstance()->logCategory;
     }
 }

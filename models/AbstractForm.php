@@ -59,9 +59,9 @@ abstract class AbstractForm extends Model
      */
     public function doService()
     {
-        Support::logger($this->getName() . ' start', $this->attributes);
+        $this->logger($this->getName() . ' start', $this->attributes);
         $result = $this->service();
-        Support::logger($this->getName() . ' over', $result);
+        $this->logger($this->getName() . ' over', $result);
         return $result;
     }
 
@@ -136,10 +136,16 @@ abstract class AbstractForm extends Model
             if ($responseData['status'] == 200) {
                 return $responseData['data'];
             }
-            Support::logger($this->getName() . ' response validate error', $responseData, 'warning');
+            $this->logger($this->getName() . ' response validate error', $responseData, 'warning');
             throw new ApiResponseValidateErrorException($responseData['msg'], $responseData['status'], $responseData);
         }
-        Support::logger($this->getName() . ' response error', $response, 'error');
+        $this->logger($this->getName() . ' response error', $response, 'error');
         throw new ApiResponseErrorException('请求失败：错误码' . $response->getStatusCode(), $response);
+    }
+
+    protected function logger($title, $data, $type = 'info')
+    {
+        $paymentClass = get_class($this->getPayment());
+        Support::logger($title, $data, $type, $paymentClass);
     }
 }
