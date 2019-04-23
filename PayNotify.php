@@ -17,7 +17,7 @@ class PayNotify
     public static function handle(callable $callback, $paymentClass = null)
     {
         $notify = Yii::$app->request->post();
-        Support::logger('notify meta', $notify, $paymentClass);
+        Support::logger('notify meta', $notify, 'info', $paymentClass);
 
         // 校验签名
         $sk = Payment::getInstance($paymentClass)->sk;
@@ -27,7 +27,7 @@ class PayNotify
         }
 
         $handleResult = call_user_func_array($callback, [$notify]);
-        Support::logger('notify response', $handleResult, $paymentClass);
+        Support::logger('notify response', $handleResult, 'info', $paymentClass);
 
         if (is_bool($handleResult) && $handleResult) {
             $response = 'success';
