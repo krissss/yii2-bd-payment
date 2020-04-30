@@ -213,16 +213,15 @@ class PayForm extends AbstractForm
 
     /**
      * 获取用户ip
-     * @return mixed|null|string
+     * @return string
      */
     protected function getUserIp()
     {
-        if ($this->spbill_create_ip) {
-            return $this->spbill_create_ip;
-        }
         if ($this->spbill_create_ip === false) {
-            return '';
+            $this->spbill_create_ip = '';
+        } elseif (!$this->spbill_create_ip) {
+            $this->spbill_create_ip = Yii::$app->request->userIP;
         }
-        return Yii::$app->request->userIP;
+        return trim(explode(',', $this->spbill_create_ip)[0]);
     }
 }
